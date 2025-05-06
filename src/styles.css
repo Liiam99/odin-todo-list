@@ -52,3 +52,101 @@ h1, h2, h3, h4, h5, h6 {
 #root, #__next {
   isolation: isolate;
 }
+
+:root {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  --primary: rgb(61, 177, 255);
+}
+
+body {
+  height: 100vh;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
+nav {
+  background-image: linear-gradient(90deg,var(--primary), rgb(110, 190, 255));
+  padding-left: 30px;
+  height: 7vh;
+}
+
+nav a {
+  text-decoration: none;
+  color: white;
+  font-size: 2.5rem;
+  font-style: italic;
+  font-weight: 600;
+  text-shadow: 5px 5px rgb(74, 137, 255);
+}
+
+#content {
+  height: 93vh;
+}
+
+#home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-height: 100%;
+}
+
+.project-list {
+  width: max(350px, 70vw);
+  overflow: scroll;
+  padding-bottom: 5px;
+  margin-bottom: 30px;
+}
+
+.project-list li {
+  display: flex;
+}
+
+.project-list-item {
+  flex: auto;
+  display: flex;
+  justify-content: space-between;
+  font-size: 2rem;
+  padding: 20px;
+  border: 2px solid var(--primary);
+  margin: 30px 30px 0px;
+  box-shadow: 4px 4px rgba(143, 143, 143, 0.589);
+  font-weight: 500;
+  background-color: transparent;
+}
+
+.project-list-item:hover {
+  animation-name: hover;
+  animation-duration: 0.2s;
+  animation-fill-mode: forwards;
+  cursor: pointer;
+}
+
+@keyframes hover {
+  from {transform: scale(1);}
+  to {transform: scale(1.03);}
+}
+
+.project-list-todo-count {
+  font-style: italic;
+  color: var(--primary);
+}
+
+.new-project {
+  padding: 10px;
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  font-weight: bold;
+  box-shadow: 3px 3px rgb(155, 155, 155);
+  border-radius: 5px;
+  margin-bottom: 30px;
+}
+
+.new-project:hover {
+  cursor: pointer;
+  animation: hover 0.1s forwards;
+  filter: brightness(95%);
+}
