@@ -1,4 +1,8 @@
-export default function createProject(title) {
+export default function createProject(name) {
+    if (name.length > 30) {
+        throw new Error('Project name must not be longer than 30 characters.')
+    }
+
     const todos = [];
 
     function addToDo(todo) {
@@ -13,5 +17,5 @@ export default function createProject(title) {
         return todos.length;
     }
 
-    return { title, addToDo, getTodoCount, removeToDo };
+    return { name, addToDo, getTodoCount, removeToDo };
 }

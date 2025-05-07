@@ -67,10 +67,38 @@ ul {
   list-style: none;
 }
 
+button {
+  padding: 10px;
+  background-color: var(--primary);
+  border: none;
+  color: white;
+  font-weight: bold;
+  box-shadow: 3px 3px rgb(155, 155, 155);
+  border-radius: 5px;
+}
+
+button:hover {
+  cursor: pointer;
+  animation: hover 0.1s forwards;
+  filter: brightness(95%);
+}
+
+input {
+  border-radius: 5px;
+  box-shadow: 1px 1px rgba(155, 155, 155, 0.37);
+  border: 1px solid black;
+  padding: 5px 0px;
+  vertical-align: middle;
+}
+
+.input-wrapper label {
+  margin-right: 8px;
+}
+
 nav {
   background-image: linear-gradient(90deg,var(--primary), rgb(110, 190, 255));
-  padding-left: 30px;
-  height: 7vh;
+  padding-left: 20px;
+  min-height: 7vh;
 }
 
 nav a {
@@ -95,7 +123,8 @@ nav a {
 
 .project-list {
   width: max(350px, 70vw);
-  overflow: scroll;
+  overflow-x: hidden;
+  overflow-y: scroll;
   padding-bottom: 5px;
   margin-bottom: 30px;
 }
@@ -115,6 +144,7 @@ nav a {
   box-shadow: 4px 4px rgba(143, 143, 143, 0.589);
   font-weight: 500;
   background-color: transparent;
+  color: black;
 }
 
 .project-list-item:hover {
@@ -129,24 +159,42 @@ nav a {
   to {transform: scale(1.03);}
 }
 
+.project-list-item-name {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: max(200px, 40vw);
+}
+
 .project-list-todo-count {
   font-style: italic;
   color: var(--primary);
 }
 
 .new-project {
-  padding: 10px;
-  background-color: var(--primary);
-  border: none;
-  color: white;
-  font-weight: bold;
-  box-shadow: 3px 3px rgb(155, 155, 155);
-  border-radius: 5px;
   margin-bottom: 30px;
 }
 
-.new-project:hover {
-  cursor: pointer;
-  animation: hover 0.1s forwards;
-  filter: brightness(95%);
+dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.project-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.close-dialog {
+  align-self: end;
+  padding: 5px 13px;
+  margin-bottom: 30px;
+}
+
+#project-name {
+  text-align: center;
+  margin-bottom: 30px;
 }
