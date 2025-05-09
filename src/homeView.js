@@ -5,18 +5,21 @@ export default function loadHomeView(projects) {
     const homeContainer = document.createElement('div');
     homeContainer.id = 'home';
 
-    const projectList = createProjectList(projects);
-    homeContainer.appendChild(projectList);
+    const projectList = document.createElement('ul');
+    projectList.className = 'project-list';
+    fillProjectList(projectList, projects);
 
     const newProjectButton = document.createElement('button');
     newProjectButton.type = 'button';
     newProjectButton.className = 'new-project';
     newProjectButton.textContent = 'New project';
+
     const dialog = createProjectDialog(projects, projectList);
     newProjectButton.addEventListener('click', () => {
         dialog.showModal();
     });
-    homeContainer.append(newProjectButton, dialog);
+
+    homeContainer.append(projectList, newProjectButton, dialog);
 
     return homeContainer;
 }
@@ -35,12 +38,10 @@ function createProjectDialog(projects, projectList) {
     closeDialogButton.className = 'close-dialog';
     closeDialogButton.innerHTML = 'X';
     closeDialogButton.addEventListener('click', () => dialog.close());
-    form.appendChild(closeDialogButton);
 
     const label = document.createElement('label');
     label.setAttribute('for', 'project-name');
     label.textContent = 'Project name';
-    form.appendChild(label);
 
     const input = document.createElement('input');
     input.type = 'text';
@@ -49,39 +50,37 @@ function createProjectDialog(projects, projectList) {
     input.maxLength = 30;
     input.required = true;
     input.autofocus = true;
-    form.appendChild(input);
 
     const submitButton = document.createElement('button');
     submitButton.className = 'submit-project';
     submitButton.type = 'submit';
     submitButton.textContent = 'Create';
-    form.appendChild(submitButton);
 
     form.addEventListener('submit', () => {
         const projectName = input.value;
-        projects.push(createProject(projectName));
-
-        const newProjectList = createProjectList(projects);
-        projectList.replaceWith(newProjectList);
-        projectList = newProjectList;
+        const project = createProject(projectName);
+        const projectId = project.getId();
+        projects[projectId] = project;
+        fillProjectList(projectList, { projectId: project });
 
         input.value = null;
     });
+
+    form.append(closeDialogButton, label, input, submitButton);
 
     return dialog;
 }
 
 
-function createProjectList(projects) {
-    const projectList = document.createElement('ul');
-    projectList.className = 'project-list';
-
-    projects.forEach((project) => {
+function fillProjectList(projectList, projects) {
+    for (const projectId in projects) {
+        const project = projects[projectId];
         const listItem = document.createElement('li');
 
         const listButton = document.createElement('button');
         listButton.type = 'button';
         listButton.className = 'project-list-item';
+        listButton.dataset.projectId = projectId;
 
         const projectName = document.createElement('span');
         projectName.textContent = project.name;
@@ -95,7 +94,5 @@ function createProjectList(projects) {
 
         listItem.appendChild(listButton);
         projectList.appendChild(listItem);
-    })
-
-    return projectList;
+    }
 }
