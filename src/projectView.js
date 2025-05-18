@@ -1,5 +1,6 @@
 import createTodo from "./todo";
 
+
 export default function loadProjectView(project) {
     const projectContainer = document.createElement('div');
     projectContainer.id = 'project';
@@ -25,7 +26,8 @@ export default function loadProjectView(project) {
 
 
 function fillTodoList(todoList, todos) {
-    todos.forEach((todo) => {
+    for (const todoId in todos) {
+        const todo = todos[todoId];
         const todoFields = todo.getFields();
         const listItem = document.createElement('li');
 
@@ -39,9 +41,14 @@ function fillTodoList(todoList, todos) {
         todoTitle.className = 'todo-list-item-title';
         listButton.appendChild(todoTitle);
 
+        const todoDueDate = document.createElement('span');
+        todoDueDate.textContent = todoFields.dueDate;
+        todoDueDate.className = 'todo-list-due-date';
+        listButton.appendChild(todoDueDate);
+
         listItem.appendChild(listButton);
         todoList.appendChild(listItem);
-    });
+    };
 }
 
 
@@ -110,8 +117,9 @@ function createTodoDialog(project, todoList) {
         const priority = priorityInput.value;
 
         const todo = createTodo(title, desc, dueDate, priority);
+        const todoId = todo.getFields().id;
         project.addToDo(todo);
-        fillTodoList(todoList, [todo]);
+        fillTodoList(todoList, { [todoId]: todo });
 
         titleInput.value = null;
         descTextArea.value = null;

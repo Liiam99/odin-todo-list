@@ -4,10 +4,10 @@ export default function createProject(name) {
     }
 
     const id = crypto.randomUUID();
-    const todos = [];
+    const todos = {};
 
     function addToDo(todo) {
-        todos.push(todo);
+        todos[todo.getFields().id] = todo;
     }
 
     function getId() {
@@ -19,11 +19,11 @@ export default function createProject(name) {
     }
 
     function getTodos() {
-        return [...todos];
+        return { ...todos };
     }
 
-    function removeToDo(todo) {
-        todos.splice(todos.indexOf(todo), 1);
+    function removeToDo(todoId) {
+        delete todos[todoId];
     }
 
 
