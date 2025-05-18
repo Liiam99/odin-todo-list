@@ -1,6 +1,7 @@
 import "./styles.css";
 import createProject from "./project";
 import loadHomeView from "./homeView";
+import loadProjectView from "./projectView";
 
 
 (() => {
@@ -13,10 +14,11 @@ import loadHomeView from "./homeView";
     const projectList = document.querySelector('.project-list');
     projectList.addEventListener('click', (e) => {
         if (e.target.className === 'project-list-item') {
-            const projectId = e.target.dataset.id;
+            const projectId = e.target.dataset.projectId;
+            console.log(projectId);
             const project = projects[projectId];
 
-            //switchView(loadProjectView(project));
+            switchView(loadProjectView(project));
 
             // If project is clicked, get ID of todo and load todo when todo is clicked.
         }

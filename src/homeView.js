@@ -25,6 +25,32 @@ export default function loadHomeView(projects) {
 }
 
 
+function fillProjectList(projectList, projects) {
+    for (const projectId in projects) {
+        const project = projects[projectId];
+        const listItem = document.createElement('li');
+
+        const listButton = document.createElement('button');
+        listButton.type = 'button';
+        listButton.className = 'project-list-item';
+        listButton.dataset.projectId = projectId;
+
+        const projectName = document.createElement('span');
+        projectName.textContent = project.name;
+        projectName.className = 'project-list-item-name';
+        listButton.appendChild(projectName);
+
+        const listCount = document.createElement('span');
+        listCount.className = 'project-list-todo-count';
+        listCount.textContent = project.getTodoCount();
+        listButton.appendChild(listCount);
+
+        listItem.appendChild(listButton);
+        projectList.appendChild(listItem);
+    }
+}
+
+
 function createProjectDialog(projects, projectList) {
     const dialog = document.createElement('dialog');
 
@@ -61,7 +87,7 @@ function createProjectDialog(projects, projectList) {
         const project = createProject(projectName);
         const projectId = project.getId();
         projects[projectId] = project;
-        fillProjectList(projectList, { projectId: project });
+        fillProjectList(projectList, { [projectId]: project });
 
         input.value = null;
     });
@@ -69,30 +95,4 @@ function createProjectDialog(projects, projectList) {
     form.append(closeDialogButton, label, input, submitButton);
 
     return dialog;
-}
-
-
-function fillProjectList(projectList, projects) {
-    for (const projectId in projects) {
-        const project = projects[projectId];
-        const listItem = document.createElement('li');
-
-        const listButton = document.createElement('button');
-        listButton.type = 'button';
-        listButton.className = 'project-list-item';
-        listButton.dataset.projectId = projectId;
-
-        const projectName = document.createElement('span');
-        projectName.textContent = project.name;
-        projectName.className = 'project-list-item-name';
-        listButton.appendChild(projectName);
-
-        const listCount = document.createElement('span');
-        listCount.className = 'project-list-todo-count';
-        listCount.textContent = project.getTodoCount();
-        listButton.appendChild(listCount);
-
-        listItem.appendChild(listButton);
-        projectList.appendChild(listItem);
-    }
 }

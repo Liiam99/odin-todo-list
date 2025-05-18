@@ -24,6 +24,7 @@ export default function createTodo(title, description, dueDate, priority) {
 
     function getFields() {
         return {
+            id,
             title,
             description,
             dueDate,

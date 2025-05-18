@@ -10,17 +10,22 @@ export default function createProject(name) {
         todos.push(todo);
     }
 
-    function removeToDo(todo) {
-        todos.splice(todos.indexOf(todo), 1);
+    function getId() {
+        return id;
     }
 
     function getTodoCount() {
         return todos.length;
     }
 
-    function getId() {
-        return id;
+    function getTodos() {
+        return [...todos];
     }
 
-    return { name, addToDo, getId, getTodoCount, removeToDo };
+    function removeToDo(todo) {
+        todos.splice(todos.indexOf(todo), 1);
+    }
+
+
+    return { name, addToDo, getId, getTodoCount, getTodos, removeToDo };
 }
