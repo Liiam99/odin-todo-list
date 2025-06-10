@@ -2,11 +2,12 @@ import "./styles.css";
 import createProject from "./project";
 import loadHomeView from "./homeView";
 import loadProjectView from "./projectView";
+import loadTodoView from "./todoView";
 
 
 (() => {
     const projects = {};
-    const defaultProject = createProject('(no project)');
+    const defaultProject = createProject('(untitled project)');
     projects[defaultProject.getId()] = defaultProject;
 
     switchView(loadHomeView(projects));
@@ -15,12 +16,19 @@ import loadProjectView from "./projectView";
     projectList.addEventListener('click', (e) => {
         if (e.target.className === 'project-list-item') {
             const projectId = e.target.dataset.projectId;
-            console.log(projectId);
             const project = projects[projectId];
-
             switchView(loadProjectView(project));
 
-            // If project is clicked, get ID of todo and load todo when todo is clicked.
+            const todoList = document.querySelector('.todo-list');
+            todoList.addEventListener('click', (e) => {
+                if (e.target.className === 'todo-list-item') {
+                    const todoId = e.target.dataset.todoId;
+                    const todos = project.getTodos();
+                    const todo = todos[todoId];
+
+                    switchView(loadTodoView(todo));
+                }
+            })
         }
     });
 })();

@@ -36,6 +36,24 @@ function fillTodoList(todoList, todos) {
         listButton.className = 'todo-list-item';
         listButton.dataset.todoId = todoFields.id;
 
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete-todo';
+        deleteButton.type = 'button';
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        const svgTitle = document.createElement('title');
+        svgTitle.textContent = 'delete';
+        svg.append(svgTitle);
+        const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        svgPath.setAttribute('d', 'M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z');
+        svg.append(svgPath);
+        deleteButton.append(svg);
+
+        deleteButton.addEventListener('click', () => {
+            delete todos[todoId];
+            listItem.remove();
+        })
+
         const todoTitle = document.createElement('span');
         todoTitle.textContent = todoFields.title;
         todoTitle.className = 'todo-list-item-title';
@@ -46,7 +64,7 @@ function fillTodoList(todoList, todos) {
         todoDueDate.className = 'todo-list-due-date';
         listButton.appendChild(todoDueDate);
 
-        listItem.appendChild(listButton);
+        listItem.append(listButton, deleteButton);
         todoList.appendChild(listItem);
     };
 }
@@ -93,6 +111,7 @@ function createTodoDialog(project, todoList) {
     dueDateInput.id = 'todo-due-date';
     dueDateInput.name = 'todo-due-date';
     dueDateInput.min = new Date().toISOString().split('T')[0];
+    dueDateInput.value = dueDateInput.min;
 
     const priorityLabel = document.createElement('label');
     priorityLabel.setAttribute('for', 'todo-priority');
@@ -102,6 +121,7 @@ function createTodoDialog(project, todoList) {
     priorityInput.id = 'todo-priority';
     priorityInput.name = 'todo-priority';
     priorityInput.min = 1;
+    priorityInput.value = priorityInput.min;
     priorityInput.max = 3;
     priorityInput.required = true;
 
@@ -123,8 +143,8 @@ function createTodoDialog(project, todoList) {
 
         titleInput.value = null;
         descTextArea.value = null;
-        dueDateInput.value = null;
-        priorityInput.value = null;
+        dueDateInput.value = dueDateInput.min;
+        priorityInput.value = priorityInput.min;
     });
 
     form.append(

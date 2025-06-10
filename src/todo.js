@@ -18,8 +18,8 @@ export default function createTodo(title, description, dueDate, priority) {
         priority = newPriority;
     }
 
-    function toggleCompletion() {
-        isComplete = !isComplete;
+    function setCompletion(completion) {
+        isComplete = completion;
     }
 
     function getFields() {
@@ -34,5 +34,5 @@ export default function createTodo(title, description, dueDate, priority) {
     }
 
     return { setTitle, setDescription, setDueDate, setPriority,
-        toggleCompletion, getFields };
+        setCompletion, getFields };
 }
