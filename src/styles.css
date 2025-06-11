@@ -175,12 +175,13 @@ nav a {
   max-width: max(200px, 40vw);
 }
 
-.delete-todo {
+.delete {
   background-color: transparent;
   margin-left: 30px;
+  flex-shrink: 0;
 }
 
-.delete-todo svg {
+.delete svg {
   height: 3rem;
   fill: red;
 }

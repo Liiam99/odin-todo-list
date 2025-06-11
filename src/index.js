@@ -3,12 +3,18 @@ import createProject from "./project";
 import loadHomeView from "./homeView";
 import loadProjectView from "./projectView";
 import loadTodoView from "./todoView";
+import { loadProjects, saveNewProject } from "./storage";
 
 
 (() => {
-    const projects = {};
-    const defaultProject = createProject('(untitled project)');
-    projects[defaultProject.getId()] = defaultProject;
+    let projects = loadProjects();
+
+    if (!projects) {
+        projects = {};
+        const defaultProject = createProject('(untitled project)');
+        projects[defaultProject.getId()] = defaultProject;
+        saveNewProject(defaultProject);
+    }
 
     switchView(loadHomeView(projects));
 
@@ -26,7 +32,7 @@ import loadTodoView from "./todoView";
                     const todos = project.getTodos();
                     const todo = todos[todoId];
 
-                    switchView(loadTodoView(todo));
+                    switchView(loadTodoView(todo, projectId));
                 }
             })
         }

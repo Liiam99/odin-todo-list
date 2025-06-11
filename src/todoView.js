@@ -1,16 +1,18 @@
-export default function loadTodoView(todo) {
+import { saveTodo } from "./storage";
+
+
+export default function loadTodoView(todo, projectId) {
     const todoContainer = document.createElement('div');
     todoContainer.id = 'todo';
 
-    const todoForm = createTodoForm(todo);
-
+    const todoForm = createTodoForm(todo, projectId);
     todoContainer.append(todoForm);
 
     return todoContainer;
 }
 
 
-function createTodoForm(todo) {
+function createTodoForm(todo, projectId) {
     const todoFields = todo.getFields();
 
     const form = document.createElement('form');
@@ -81,6 +83,8 @@ function createTodoForm(todo) {
         todo.setDueDate(dueDateInput.value);
         todo.setPriority(priorityInput.value);
         todo.setCompletion(completionInput.checked);
+
+        saveTodo(projectId, todo);
     });
 
     form.append(

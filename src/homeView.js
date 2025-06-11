@@ -1,4 +1,5 @@
 import createProject from "./project";
+import { deleteProject, saveNewProject } from "./storage";
 
 
 export default function loadHomeView(projects) {
@@ -35,6 +36,24 @@ function fillProjectList(projectList, projects) {
         listButton.className = 'project-list-item';
         listButton.dataset.projectId = projectId;
 
+        const deleteButton = document.createElement('button');
+        deleteButton.className = 'delete';
+        deleteButton.type = 'button';
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 24 24');
+        const svgTitle = document.createElement('title');
+        svgTitle.textContent = 'delete';
+        svg.append(svgTitle);
+        const svgPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+        svgPath.setAttribute('d', 'M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z');
+        svg.append(svgPath);
+        deleteButton.append(svg);
+
+        deleteButton.addEventListener('click', () => {
+            listItem.remove();
+            deleteProject(projectId);
+        })
+
         const projectName = document.createElement('span');
         projectName.textContent = project.name;
         projectName.className = 'project-list-item-name';
@@ -45,7 +64,7 @@ function fillProjectList(projectList, projects) {
         listCount.textContent = project.getTodoCount();
         listButton.appendChild(listCount);
 
-        listItem.appendChild(listButton);
+        listItem.append(listButton, deleteButton);
         projectList.appendChild(listItem);
     }
 }
@@ -88,6 +107,8 @@ function createProjectDialog(projects, projectList) {
         const projectId = project.getId();
         projects[projectId] = project;
         fillProjectList(projectList, { [projectId]: project });
+
+        saveNewProject(project);
 
         input.value = null;
     });

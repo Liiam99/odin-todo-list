@@ -1,4 +1,5 @@
 import createTodo from "./todo";
+import { deleteTodo, saveTodo } from "./storage";
 
 
 export default function loadProjectView(project) {
@@ -8,7 +9,7 @@ export default function loadProjectView(project) {
     const todoList = document.createElement('ul');
     todoList.className = 'todo-list';
     const todos = project.getTodos();
-    fillTodoList(todoList, todos);
+    fillTodoList(todoList, todos, project.getId());
 
     const newTodoButton = document.createElement('button');
     newTodoButton.type = 'button';
@@ -25,7 +26,7 @@ export default function loadProjectView(project) {
 }
 
 
-function fillTodoList(todoList, todos) {
+function fillTodoList(todoList, todos, projectId) {
     for (const todoId in todos) {
         const todo = todos[todoId];
         const todoFields = todo.getFields();
@@ -37,7 +38,7 @@ function fillTodoList(todoList, todos) {
         listButton.dataset.todoId = todoFields.id;
 
         const deleteButton = document.createElement('button');
-        deleteButton.className = 'delete-todo';
+        deleteButton.className = 'delete';
         deleteButton.type = 'button';
         const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
         svg.setAttribute('viewBox', '0 0 24 24');
@@ -52,6 +53,7 @@ function fillTodoList(todoList, todos) {
         deleteButton.addEventListener('click', () => {
             delete todos[todoId];
             listItem.remove();
+            deleteTodo(projectId, todoFields.id);
         })
 
         const todoTitle = document.createElement('span');
@@ -140,6 +142,8 @@ function createTodoDialog(project, todoList) {
         const todoId = todo.getFields().id;
         project.addToDo(todo);
         fillTodoList(todoList, { [todoId]: todo });
+
+        saveTodo(project.getId(), todo);
 
         titleInput.value = null;
         descTextArea.value = null;

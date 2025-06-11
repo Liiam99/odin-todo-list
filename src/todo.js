@@ -1,7 +1,4 @@
-export default function createTodo(title, description, dueDate, priority) {
-    const id = crypto.randomUUID();
-    let isComplete = false;
-
+export default function createTodo(title, description, dueDate, priority, id=crypto.randomUUID(), isComplete=false) {
     function setTitle(newTitle) {
         title = newTitle;
     }

@@ -1,10 +1,7 @@
-export default function createProject(name) {
+export default function createProject(name, id=crypto.randomUUID(), todos={}) {
     if (name.length > 30) {
         throw new Error('Project name must not be longer than 30 characters.')
     }
-
-    const id = crypto.randomUUID();
-    const todos = {};
 
     function addToDo(todo) {
         todos[todo.getFields().id] = todo;
@@ -15,7 +12,7 @@ export default function createProject(name) {
     }
 
     function getTodoCount() {
-        return todos.length;
+        return Object.keys(todos).length;
     }
 
     function getTodos() {
